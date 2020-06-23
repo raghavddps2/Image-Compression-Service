@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 public class Compression {
 
-    public void compressPng(String inputPath,String outputPath,String extension) throws IOException {
+     public void compressPng(String inputPath,String outputPath,String extension) throws IOException {
 
         //Reading the input image.
         File input = new File(inputPath);
@@ -25,22 +25,25 @@ public class Compression {
             inputImage = newBufferedImage;
         }
         //Then we call compress method.
-        compress(outputPath,inputImage);
+        //chamge this.
+        double fileSizeInKB = (float)input.length() /(1024.0);
+        System.out.println("File Size is: "+fileSizeInKB+"KB");
+        compress(outputPath,inputImage,fileSizeInKB);
+
         return;
     }
 
     public void compressOthers(String inputPath,String outputPath,String extension) throws IOException{
         //Reading the file.
         File input = new File(inputPath);
+        double fileSizeInKB = (float)input.length() /(1024.0);
+        System.out.println("File Size is: "+fileSizeInKB+"KB");
         BufferedImage inputImage = ImageIO.read(input);
-
-        //Calling the compression method.
-        compress(outputPath,inputImage);
-        return;
+        compress(outputPath, inputImage,fileSizeInKB);
     }
 
     //Private.
-    private void compress(String outputPath,BufferedImage inputImage) throws IOException {
+    private void compress(String outputPath,BufferedImage inputImage,double fileSizeInKb) throws IOException {
 
         //Getting the OutputStream for the output file.
         File output = new File(outputPath);
@@ -58,9 +61,14 @@ public class Compression {
 
         //Setting compression parameters.
         param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        param.setCompressionQuality(0.5f);
-
-        //Writing the image back.
+        double compressionQualityFactor = (400)/fileSizeInKb;
+        System.out.println(compressionQualityFactor);
+        if(compressionQualityFactor < 0.05){
+            compressionQualityFactor = 0.05;
+        }
+        System.out.println(compressionQualityFactor);
+        param.setCompressionQuality((float)compressionQualityFactor);
+            //Writing the image back.
         writer.write(null,new IIOImage(inputImage,null,null),param);
         return;
 

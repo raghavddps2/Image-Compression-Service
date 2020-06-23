@@ -6,12 +6,12 @@ public class App {
     public static void main(String[] args) {
 
         try{
-
             //Take filename from the user.
             System.out.println("--------------------- Image Compression ------------------------");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Enter the image name in the Assets folder: \t");
-            String file = reader.readLine();
+                String file = reader.readLine();
+
             String[] fileNameSplit = file.split("\\.");
 
             //We convert everything to jpg because we can achieve maximum compression.
@@ -37,9 +37,8 @@ public class App {
             }
             System.out.println("Processing Done, Image Saved!");
             System.out.println("------------------------------------------------");
-            //Calling function to upload image to the cloud.
+//            Calling function to upload image to the cloud.
             String publicUrl = upload.uploadImageToS3(fileNameInAws);
-            //Public Url.
             System.out.println(publicUrl);
         }
         catch(Exception e){
