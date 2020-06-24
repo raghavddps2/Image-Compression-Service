@@ -20,26 +20,31 @@ public class App {
 
             //Making the input and the output image paths.
             String inputPath = "Assets/Original/"+file;
+            String intermediatePath = "Assets/IntermediateSize"+file;
             String outputPath = "Assets/Compressed/"+fileName;
 
-            //Making objects for uploading and compression.
+            //Making objects for resize, uploading and compression.
+            ImageResize imageResize = new ImageResize();
             Upload upload = new Upload();
             Compression compression = new Compression();
+
+            //Resizing the image.
+            imageResize.resize(inputPath,intermediatePath);
 
             //Calling appropriate compression method for the file type.
             String fileNameInAws = fileName;
             System.out.println("Processing Image");
             if(extension.equals("png")){
-                compression.compressPng(inputPath,outputPath,extension);
+                compression.compressPng(intermediatePath,outputPath,extension);
             }
             else{
-                compression.compressOthers(inputPath,outputPath,extension);
+                compression.compressOthers(intermediatePath,outputPath,extension);
             }
             System.out.println("Processing Done, Image Saved!");
             System.out.println("------------------------------------------------");
 //            Calling function to upload image to the cloud.
-            String publicUrl = upload.uploadImageToS3(fileNameInAws);
-            System.out.println(publicUrl);
+//            String publicUrl = upload.uploadImageToS3(fileNameInAws);
+//            System.out.println(publicUrl);
         }
         catch(Exception e){
             e.printStackTrace();
