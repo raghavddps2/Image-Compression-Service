@@ -42,8 +42,8 @@ public class ImageResize {
         double percent = Math.max(widthPercent,heightPercent);
         System.out.println(percent);
         percent = percent/100.0;
-        int scaledWidth = (int) (imageWidth * percent);
-        int scaledHeight = (int) (imageHeight * percent);
+        int scaledWidth = (int) (imageWidth * percent) + 1;
+        int scaledHeight = (int) (imageHeight * percent) + 1;
         System.out.println(scaledHeight+" "+scaledWidth);
         resize(inputImagePath, outputImagePath, scaledWidth, scaledHeight);
     }

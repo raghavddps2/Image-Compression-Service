@@ -61,12 +61,6 @@ public class Compression {
 
         //Setting compression parameters.
         param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-//        double compressionQualityFactor = (400)/fileSizeInKb;
-//        System.out.println(compressionQualityFactor);
-////        if(compressionQualityFactor < 0.05){
-////            compressionQualityFactor = 0.05;
-////        }
-//        System.out.println(compressionQualityFactor);
         double compressionQualityFactor = 0.5;
         param.setCompressionQuality((float)compressionQualityFactor);
             //Writing the image back.
